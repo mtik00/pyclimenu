@@ -31,7 +31,6 @@ if __name__ == '__main__':
             'License :: OSI Approved :: MIT License',
             'Operating System :: Microsoft :: Windows',
             'Operating System :: POSIX :: Linux',
-            'Platform: POSIX, Windows',
             'Programming Language :: Python :: 2',
             'Programming Language :: Python :: 3',
             'Development Status :: 5 - Production/Stable'
