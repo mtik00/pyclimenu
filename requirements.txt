@@ -2,3 +2,4 @@
 Fabric>=1.10.2
 sphinx-autobuild
 Sphinx>=1.5.5
+twine
