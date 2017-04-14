@@ -6,6 +6,7 @@ text-based menus.
 The interface loosely mimics `click <http://click.pocoo.org>`_ (the use of
 decorators to define the interface).
 
+Documentation is hosted `on ReadTheDocs <http://pyclimenu.rtfd.io/>`_
 ----
 
 Example::
@@ -17,7 +18,7 @@ Example::
     def build_release():
         '''Build release'''
         print("built the release")
-    
+
     @climenu.menu()
     def build_package():
         '''Build the package'''
