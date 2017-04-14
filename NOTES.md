@@ -17,7 +17,7 @@ The interface loosely mimiks [click](http://click.pocoo.org).
     `fab release`
 *   Build the packages:  
     `fab make.build`  
-    `python setup.py sdist --formats gztar,zip bdist_wheel`
+    `python setup.py sdist --formats gztar bdist_wheel`
 *   Upload with `twine`:  
     `fab upload`  
     `twine upload dist/*`

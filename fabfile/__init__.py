@@ -11,8 +11,13 @@ from fabric.api import task
 from fabric.utils import abort
 from fabric.colors import red
 
+from .git import on_master, is_clean
 from .ver import get_version
-from .helpers import ex, true
+from .helpers import true
+from .build import build
+from .pypi import upload
+from .gh import repo_list
+
 
 if sys.version_info.major > 2:
     raw_input = input
@@ -30,15 +35,15 @@ def release(clean='y'):
 
     :param bool clean: Check to make sure the workspace is clean
     '''
-    # Make sure we're on the master branch
-    (text, _) = ex(['git', 'status'])
-    if "On branch master" not in text:
+    print(repo_list())
+
+    if not on_master():
         abort(("Only releasing from branch `master` is supported"))
 
     # Make sure there's everything's checked in
     if true(clean):
-        (text, _) = ex(['git', 'status', '--porcelain'])
-        if text:
+        clean, text = is_clean()
+        if not clean:
             abort("Staging area is not clean:\n%s" % red(text))
 
     ver = get_version()
@@ -46,3 +51,9 @@ def release(clean='y'):
     val = raw_input("...OK? ")
     if not true(val):
         abort("User aborted")
+
+    # Build the release
+    build()
+
+    # Upload to pypi
+    upload()

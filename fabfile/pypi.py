@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-This module holds the common constants used across Fabric.
+This module holds the management functions for interacting wity Pypi
 '''
 
 # Imports #####################################################################
-import os
+from .helpers import ex
+
 
 # Metadata ####################################################################
 __author__ = 'Timothy McFadden'
-__creationDate__ = '13-APR-2017'
+__creationDate__ = '14-APR-2017'
 
 
 # Globals #####################################################################
-THIS_DIR = os.path.abspath(os.path.dirname(__file__))
-LIB_DIR = os.path.join(THIS_DIR, '..')
-VER_FILE = os.path.join(LIB_DIR, 'climenu.py')
+def upload():
+    '''Upload the release files to Pypi'''
+    command = 'dir'  # ['twine', 'upload', 'dist/*']
+    ex(command)

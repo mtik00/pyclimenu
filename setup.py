@@ -22,6 +22,11 @@ if __name__ == '__main__':
         name="climenu",
         version=MAIN_NS['__version__'],
         description="Command-line menu system",
+        url="https://github.com/mtik00/pyclimenu",
+        download_url=(
+            "https://github.com/mtik00/pyclimenu/releases/download/v{0}"
+            "/climenu-{0}.tar.gz").format(MAIN_NS['__version__']),
+
         keywords='cli command-line menu',
 
         # https://pypi.python.org/pypi?%3Aaction=list_classifiers

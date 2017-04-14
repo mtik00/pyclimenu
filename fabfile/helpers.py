@@ -6,6 +6,8 @@ This module holds various helper functions
 
 # Imports #####################################################################
 from __future__ import print_function
+import os
+import sys
 import subprocess
 
 
@@ -52,3 +54,34 @@ def true(value):
 
     # Use the default representation
     return bool(value)
+
+
+def remove_directory(top, remove_top=True, filter=None):
+    '''
+    Removes all files and directories, bottom-up.
+
+    :param str top: The top-level directory to clean out
+    :param bool remove_top: Whether or not to delete the top
+        directory when cleared.
+    :param code filter: A function that returns True or False
+        based on the name of the file or folder.  Returning
+        True means "delete it", False means "keep it".
+    '''
+    if not os.path.isdir(top):
+        return
+
+    if filter is None:
+        filter = lambda x: True
+
+    for root, dirs, files in os.walk(top, topdown=False):
+        for name in [x for x in files if filter(x)]:
+            os.remove(os.path.join(root, name))
+
+        for name in [x for x in dirs if filter(x)]:
+            os.rmdir(os.path.join(root, name))
+
+    if remove_top:
+        try:
+            os.rmdir(top)
+        except OSError as e:
+            print("error removing top:", e.message, file=sys.stderr)
