@@ -1,0 +1,3 @@
+# NOTE: These are requirments for managing pyclimenu, not pyclimenu itself
+Fabric>=1.10.2
+mkdocs>=0.16.1
