@@ -30,7 +30,7 @@ __creationDate__ = '13-APR-2017'
 
 # Globals #####################################################################
 @task
-def release(clean='y'):
+def release(clean='y', pypi='y'):
     '''Build and release
 
     :param bool clean: Check to make sure the workspace is clean
@@ -56,4 +56,5 @@ def release(clean='y'):
     build()
 
     # Upload to pypi
-    upload()
+    if true(pypi):
+        upload()
