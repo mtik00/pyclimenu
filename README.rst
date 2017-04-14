@@ -7,6 +7,7 @@ The interface loosely mimics `click <http://click.pocoo.org>`_ (the use of
 decorators to define the interface).
 
 Documentation is hosted `on ReadTheDocs <http://pyclimenu.rtfd.io/>`_
+
 ----
 
 Example::
