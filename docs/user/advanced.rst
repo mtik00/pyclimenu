@@ -22,7 +22,8 @@ The *group* is just an empty function decorated by ``@climenu.group``:
         pass
 
 Once the group is defined, you can add menu items to it by using a decorator
-consisting of the function name and either ``.menu`` or another ``.group``.
+consisting of the function name you used to create the group, and either
+``.menu`` or another ``.group``.
 
 .. code-block:: python
 
@@ -31,12 +32,16 @@ consisting of the function name and either ``.menu`` or another ``.group``.
         '''Build the package'''
         # TODO: Add the actual code here
         print("I built the package!")
-    
+
     @build_group.menu()
     def build_release():
         '''Build the release'''
         # TODO: Add the actual code here
         print("I built the release!")
+
+.. CAUTION::
+    The name of the decorator changed from @climenu.group to @build_group!
+
 
 Running this code (``climenu.run()``) will show a single menu item for the
 *main* menu::
