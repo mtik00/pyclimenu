@@ -26,4 +26,5 @@ The User Guide
    user/install
    user/quickstart
    user/advanced
+   user/colors
    user/settings

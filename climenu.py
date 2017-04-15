@@ -18,7 +18,9 @@ __version__ = '1.0.0'
 
 
 # Globals #####################################################################
-__all__ = ['menu', 'group', 'settings']
+__all__ = [
+    'menu', 'group', 'settings', 'colors',
+]
 (IS_WIN, IS_LIN) = ('win' in sys.platform, 'lin' in sys.platform)
 MENU_ITEMS = []
 
@@ -204,6 +206,54 @@ def menu(title=None):
         MENU_ITEMS.append(menu_)
         return menu_
     return decorator
+
+
+class ANSIColors(object):
+    '''
+    A class to format strings with ANSI color codes.
+
+    The codes available are only the "first 8" color codes.  See here for
+    more information:
+    https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+    '''
+    (black_code, red_code, green_code, yellow_code, blue_code,
+     magenta_code, cyan_code, white_code) = range(8)
+    fg_code = 3
+    bg_code = 4
+
+    def black(self, text, bg=False, bright=False):
+        return self._wrap(text, self.black_code, bg=bg, bright=bright)
+
+    def red(self, text, bg=False, bright=False):
+        return self._wrap(text, self.red_code, bg=bg, bright=bright)
+
+    def green(self, text, bg=False, bright=False):
+        return self._wrap(text, self.green_code, bg=bg, bright=bright)
+
+    def yellow(self, text, bg=False, bright=False):
+        return self._wrap(text, self.yellow_code, bg=bg, bright=bright)
+
+    def blue(self, text, bg=False, bright=False):
+        return self._wrap(text, self.blue_code, bg=bg, bright=bright)
+
+    def magenta(self, text, bg=False, bright=False):
+        return self._wrap(text, self.magenta_code, bg=bg, bright=bright)
+
+    def cyan(self, text, bg=False, bright=False):
+        return self._wrap(text, self.cyan_code, bg=bg, bright=bright)
+
+    def white(self, text, bg=False, bright=False):
+        return self._wrap(text, self.white_code, bg=bg, bright=bright)
+
+    def _wrap(self, text, color_code, bg=False, bright=False):
+        return "\033[{fgbg}{code}{bright}m{text}\033[0m".format(
+            fgbg=self.bg_code if bg else self.fg_code,
+            code=color_code,
+            text=text,
+            bright=";1" if bright else ""
+        )
+
+colors = ANSIColors()
 
 
 class Settings(object):
