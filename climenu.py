@@ -25,6 +25,34 @@ __all__ = [
 MENU_ITEMS = []
 
 
+class Settings(object):
+    '''
+    This class is used to store the settings for ``climenu``.
+    '''
+    clear_screen = True
+    text = {
+        'main_menu_title': 'Main Menu',
+        'main_menu_prompt': 'Enter the selection (0 to exit): ',
+
+        'submenu_prompt': 'Enter the selection (0 to return): ',
+
+        'invalid_selection': 'Invalid selection.  Please try again. ',
+
+        'continue': 'Press Enter to continue: ',
+    }
+
+    # Add ``''`` to this list to go back one level if the user doesn't
+    # enter anything
+    back_values = ['0']
+
+    # Set this to true if you are using colors but need to disable them
+    # (e.g. a platform you use doesn't support it)
+    disable_colors = False
+
+
+settings = Settings()  # pylint: disable=C0103
+
+
 def _show_main_menu(menu_items):
     '''Show the main menu and return the selected item.'''
 
@@ -246,6 +274,9 @@ class ANSIColors(object):
         return self._wrap(text, self.white_code, bg=bg, bright=bright)
 
     def _wrap(self, text, color_code, bg=False, bright=False):
+        if settings.disable_colors:
+            return text
+
         return "\033[{fgbg}{code}{bright}m{text}\033[0m".format(
             fgbg=self.bg_code if bg else self.fg_code,
             code=color_code,
@@ -254,27 +285,3 @@ class ANSIColors(object):
         )
 
 colors = ANSIColors()
-
-
-class Settings(object):
-    '''
-    This class is used to store the settings for ``climenu``.
-    '''
-    clear_screen = True
-    text = {
-        'main_menu_title': 'Main Menu',
-        'main_menu_prompt': 'Enter the selection (0 to exit): ',
-
-        'submenu_prompt': 'Enter the selection (0 to return): ',
-
-        'invalid_selection': 'Invalid selection.  Please try again. ',
-
-        'continue': 'Press Enter to continue: ',
-    }
-
-    # Add ``''`` to this list to go back one level if the user doesn't
-    # enter anything
-    back_values = ['0']
-
-
-settings = Settings()  # pylint: disable=C0103

@@ -22,7 +22,7 @@ def build_package():
     return True
 
 
-@climenu.menu(title=climenu.colors.yellow('Build the release'))
+@climenu.menu(title=climenu.colors.yellow('Build the release', bright=True))
 def build_releasea():
     '''Build the release'''
     print("!!!release built!!!")

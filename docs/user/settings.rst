@@ -50,6 +50,15 @@ to be confused with the text displayed for a menu item).
 **continue** : This is the text presented to the user after a menu item has been
     executed.
 
+**disable_color** : Set this to `True` if you have code that uses colors, but
+    you want to disable it globally.  This can be useful if you have code that
+    runs on multiple platforms but you need to disable colors on an unsupported
+    machine.
+
+.. CAUTION::
+    Disabling colors should come prior to any color use!  For example, if you
+    use colors in the other settings (`text`, `main_menu_title`, etc).
+
 Example
 +++++++
 
