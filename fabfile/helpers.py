@@ -17,6 +17,15 @@ __creationDate__ = '13-APR-2017'
 
 
 # Globals #####################################################################
+def user_input(prompt, default=None):
+    '''Gets input from the user'''
+    if sys.version_info.major > 2:
+        answer = input(prompt)
+    else:
+        answer = raw_input(prompt)
+
+    return answer or default
+
 
 def ex(command, cwd=None, shell=None, raise_on_nonzero=True):
     """Execute a command and return the output.  This will raise an Exception if

@@ -13,14 +13,10 @@ from fabric.colors import red
 
 from .git import on_master, is_clean
 from .ver import get_version
-from .helpers import true
+from .helpers import true, user_input
 from .build import build
 from .pypi import upload
 from .gh import repo_list
-
-
-if sys.version_info.major > 2:
-    raw_input = input
 
 
 # Metadata ####################################################################
@@ -48,7 +44,7 @@ def release(clean='y', pypi='y'):
 
     ver = get_version()
     print("Releasing v%s" % ver)
-    val = raw_input("...OK? ")
+    val = user_input("...OK? ")
     if not true(val):
         abort("User aborted")
 
@@ -58,3 +54,5 @@ def release(clean='y', pypi='y'):
     # Upload to pypi
     if true(pypi):
         upload()
+
+    # Attach to GitHub
