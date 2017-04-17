@@ -3,6 +3,7 @@
 '''
 climenu setup script
 '''
+import re
 from setuptools import setup
 
 
@@ -10,19 +11,26 @@ MAIN_NS = {}
 VER_PATH = 'climenu.py'
 
 
+def get_version():
+    re_ver = re.compile(
+        '^__version__\s*=\s+[\'"](?P<version>.*?)[\'"]', re.MULTILINE)
+    text = open(VER_PATH).read()
+    return re_ver.search(text).group('version')
+
+
 if __name__ == '__main__':
-    execfile(VER_PATH, MAIN_NS)
     DESC = open('README.rst').read()
+    version = get_version()
 
     setup(
         name="climenu",
         py_modules=['climenu'],
-        version=MAIN_NS['__version__'],
+        version=version,
         description="Command-line menu system",
         url="https://github.com/mtik00/pyclimenu",
         download_url=(
             "https://github.com/mtik00/pyclimenu/releases/download/v{0}"
-            "/climenu-{0}.tar.gz").format(MAIN_NS['__version__']),
+            "/climenu-{0}.tar.gz").format(version),
 
         keywords='cli command-line menu',
 
