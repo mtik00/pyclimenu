@@ -13,11 +13,11 @@ The interface loosely mimiks [click](http://click.pocoo.org).
 *   Change the version `climenu.__version__`
 *   Make sure `release-notes.md` is up to date
 *   Add/commit/push with `prep for vX.Y.Z release`
-*   Release the package with fabric:  
-    `fab release`
+*   Create a tag:  
+    `fab git.tag`
 *   Build the packages:  
-    `fab make.build`  
-    `python setup.py sdist --formats gztar bdist_wheel`
-*   Upload with `twine`:  
-    `fab upload`  
-    `twine upload dist/*`
+    `fab build`  
+*   Upload the tarball to GitHub:  
+    `fab gh.upload:"v1.1.0","dist/climenu-1.1.0.tar.gz"`
+*   Upload the release to Pypi:  
+    `fab pypi.upload`

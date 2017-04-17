@@ -6,6 +6,7 @@ This module holds the management functions for interacting wity Pypi
 
 # Imports #####################################################################
 from .helpers import ex
+from fabric.api import task
 
 
 # Metadata ####################################################################
@@ -14,7 +15,8 @@ __creationDate__ = '14-APR-2017'
 
 
 # Globals #####################################################################
+@task
 def upload():
     '''Upload the release files to Pypi'''
-    command = 'dir'  # ['twine', 'upload', 'dist/*']
+    command = ['twine', 'upload', 'dist/*']
     ex(command)

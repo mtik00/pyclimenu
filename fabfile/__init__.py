@@ -6,7 +6,6 @@ This module is used to manage the pyclimenu project.
 
 # Imports #####################################################################
 from __future__ import print_function
-import sys
 from fabric.api import task
 from fabric.utils import abort
 from fabric.colors import red

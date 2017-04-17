@@ -49,7 +49,6 @@ def tag():
     if tags:
         print("...latest tag is: %s" % tags[-1])
 
-
     name = user_input("Enter tag to create: ")
     name = "v" + name if not name.startswith('v') else name
     message = "creating tag %s" % name
