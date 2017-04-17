@@ -16,6 +16,7 @@ if __name__ == '__main__':
 
     setup(
         name="climenu",
+        py_modules=['climenu'],
         version=MAIN_NS['__version__'],
         description="Command-line menu system",
         url="https://github.com/mtik00/pyclimenu",
