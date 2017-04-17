@@ -10,7 +10,9 @@ Documentation is hosted `on ReadTheDocs <http://pyclimenu.rtfd.io/>`_
 
 ----
 
-Example::
+Example:
+
+.. code-block:: python
 
     from __future__ import print_function
     import climenu
