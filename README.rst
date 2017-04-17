@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/mtik00/pyclimenu.svg?branch=master
+    :target: https://travis-ci.org/mtik00/pyclimenu
+
 climenu
 =======
 This project is used to create *simple* command-line interfaces using
