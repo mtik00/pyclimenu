@@ -159,7 +159,8 @@ def clear_screen():
     elif IS_LIN:
         os.system('clear')
     else:
-        raise NotImplementedError("Your platform has not been implemented: %s" % sys.platform)
+        raise NotImplementedError(
+            "Your platform has not been implemented: %s" % sys.platform)
 
 
 def get_user_input(prompt=None, test_value=None):
@@ -210,7 +211,8 @@ class MenuGroup(object):
         '''Decorator to add a menu group to our list'''
         def decorator(decorated_function):
             '''create a menu group decorator'''
-            menu_ = MenuGroup(kwargs.get('title') or decorated_function.__doc__)
+            menu_ = MenuGroup(
+                kwargs.get('title') or decorated_function.__doc__)
             self.menus.append(menu_)
             return menu_
         return decorator
@@ -230,7 +232,8 @@ def menu(title=None):
     '''A decorator to create a single menu item'''
     def decorator(decorated_function):
         '''create a menu item decorator'''
-        menu_ = Menu(title or decorated_function.__doc__, callback=decorated_function)
+        menu_ = Menu(
+            title or decorated_function.__doc__, callback=decorated_function)
         MENU_ITEMS.append(menu_)
         return menu_
     return decorator
@@ -283,5 +286,6 @@ class ANSIColors(object):
             text=text,
             bright=";1" if bright else ""
         )
+
 
 colors = ANSIColors()
