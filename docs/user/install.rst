@@ -14,7 +14,7 @@ Install from source
 -------------------
 
 ``climenu`` is hosted on GitHub.  You can download the
-`latest release here <https://github.com/>`_.
+`latest release here <https://github.com/mtik00/pyclimenu/releases/latest/>`_.
 
 Unzip the tarball, and run ``setup.py``::
 
