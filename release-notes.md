@@ -1,3 +1,7 @@
+# v1.1.2
+*   FIX: setup.py not compatible with Python 3.
+***
+
 # v1.1.1
 *   FIX: package not included in setup.py
 ***
