@@ -28,6 +28,19 @@ The following parameters can be used to change how climenu operates
     in *back*, change this to ``['0', '']``.  This makes it so the user can keep
     pressing the ``Enter`` key to exit the application from any submenu.
 
+**quit_value** (``string``): This value causes the menu system to exit
+    immediately.  It's also formatted in the defaults for ``text['submenu_prompt']``
+    and ``text['main_menu_prompt']``.
+
+    For example, the default settings produce a main menu prompt that looks
+    like::
+
+        Enter the selection ([0, q] to quit):
+    
+    and a submenu prompt that looks like::
+
+        Enter the selection ([0] to return, q to quit):
+
 Changing Displayed Text
 +++++++++++++++++++++++
 
@@ -39,10 +52,15 @@ to be confused with the text displayed for a menu item).
     menu.
 
 **main_menu_prompt** : This is the string displayed at the bottom of the first menu
-    asking the user to either select and item or '0' to exit the application.
+    asking the user to either select and item or 'q' to exit the application.
+    This includes a special formatter ``{q}`` that displays the text
+    used to quit the application.
 
 **submenu_prompt** : This is almost the same as ``main_menu_prompt``, except the user
-    is prompted to select '0' to return (as opposed to *exit*).
+    is prompted to select '0' to return (as opposed to *exit*).  This includes
+    two special formatting fields: ``{q}``, that displays the text used to quit
+    the application, and ``{back}``, which is used to show the user what to
+    enter to go back **up** on level of menu.
 
 **invalid_selection** : This is the text presented to the user if they make an invalid
     selection.
