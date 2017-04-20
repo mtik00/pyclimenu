@@ -32,12 +32,9 @@ class Settings(object):
     clear_screen = True
     text = {
         'main_menu_title': 'Main Menu',
-        'main_menu_prompt': 'Enter the selection (0 to exit): ',
-
-        'submenu_prompt': 'Enter the selection (0 to return): ',
-
+        'main_menu_prompt': 'Enter the selection ([{q}] to quit): ',
+        'submenu_prompt': 'Enter the selection ([{back}] to return, {q} to quit): ',
         'invalid_selection': 'Invalid selection.  Please try again. ',
-
         'continue': 'Press Enter to continue: ',
     }
 
@@ -45,9 +42,25 @@ class Settings(object):
     # enter anything
     back_values = ['0']
 
+    # Change this to the character or phrase that will immediately exit the
+    # menu.
+    quit_value = 'q'
+
     # Set this to true if you are using colors but need to disable them
     # (e.g. a platform you use doesn't support it)
     disable_colors = False
+
+    def get_submenu_prompt(self):
+        return self.text['submenu_prompt'].format(
+            back=", ".join([x or '""' for x in self.back_values]),
+            q=self.quit_value
+        )
+
+    def get_main_menu_prompt(self):
+        return self.text['main_menu_prompt'].format(
+            q=", ".join([x or '""' for x in self.back_values + [self.quit_value]]),
+            # q=self.quit_value
+        )
 
 
 settings = Settings()  # pylint: disable=C0103
@@ -63,12 +76,12 @@ def _show_main_menu(menu_items):
             print("%2i : %s" % (index + 1, menu_group.title))
 
         print()
-        value = get_user_input(settings.text['main_menu_prompt'])
+        value = get_user_input(settings.get_main_menu_prompt())
 
-        if value in settings.back_values:
+        if value.lower() in settings.back_values + [settings.quit_value]:
             return None
 
-        if not(value.isdigit()) or (int(value) > len(menu_items)):
+        if not(value.isdigit()) or (int(value) <= 0) or (int(value) > len(menu_items)):
             print(settings.text['invalid_selection'])
             continue
 
@@ -76,7 +89,7 @@ def _show_main_menu(menu_items):
 
 
 def _show_group_menu(menu_group):
-    '''Show a submenue and return the selected item.'''
+    '''Show a submenu and return the selected item.'''
     while True:
         print(menu_group.title)
 
@@ -85,10 +98,12 @@ def _show_group_menu(menu_group):
             print("%2i : %s" % (index + 1, submenu.title))
 
         print()
-        value = get_user_input(settings.text['submenu_prompt'])
+        value = get_user_input(settings.get_submenu_prompt())
 
         if value in settings.back_values:
             return None
+        elif value.lower() == settings.quit_value:
+            sys.exit(0)
 
         if not(value.isdigit()) or (int(value) > len(submenu_items)):
             print(settings.text['invalid_selection'])
