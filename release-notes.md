@@ -1,3 +1,8 @@
+# v-----
+*   Changing the way the function docstring is used as the title.  We'll now
+    run it through `.strip().split('\n')[0]`.
+***
+
 # v1.2.0
 *   Adding `q` to quit the application immediately.  You no longer have to
     back all of the way out.

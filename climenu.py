@@ -198,6 +198,13 @@ def get_user_input(prompt=None, test_value=None):
         return input()
 
 
+def first_line(text):
+    '''
+    Returns just the first line in a docstring.
+    '''
+    return text.strip().split('\n')[0]
+
+
 class Menu(object):
     '''A sinlge menu item with a callback'''
     def __init__(self, title, callback):
@@ -216,7 +223,7 @@ class MenuGroup(object):
         def decorator(decorated_function):
             '''create a menu item decorator'''
             menu_ = Menu(
-                kwargs.get('title') or decorated_function.__doc__,
+                kwargs.get('title') or first_line(decorated_function.__doc__),
                 callback=decorated_function)
             self.menus.append(menu_)
             return menu_
@@ -227,7 +234,7 @@ class MenuGroup(object):
         def decorator(decorated_function):
             '''create a menu group decorator'''
             menu_ = MenuGroup(
-                kwargs.get('title') or decorated_function.__doc__)
+                kwargs.get('title') or first_line(decorated_function.__doc__))
             self.menus.append(menu_)
             return menu_
         return decorator
@@ -237,7 +244,7 @@ def group(title=None):
     '''A decorator to create a new MenuGroup'''
     def decorator(decorated_function):
         '''create a menu group decorator'''
-        group_ = MenuGroup(title or decorated_function.__doc__)
+        group_ = MenuGroup(title or first_line(decorated_function.__doc__))
         MENU_ITEMS.append(group_)
         return group_
     return decorator
@@ -248,7 +255,7 @@ def menu(title=None):
     def decorator(decorated_function):
         '''create a menu item decorator'''
         menu_ = Menu(
-            title or decorated_function.__doc__, callback=decorated_function)
+            title or first_line(decorated_function.__doc__), callback=decorated_function)
         MENU_ITEMS.append(menu_)
         return menu_
     return decorator
