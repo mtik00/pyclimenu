@@ -93,7 +93,7 @@ def _show_group_menu(menu_group):
     while True:
         print(menu_group.title)
 
-        submenu_items = menu_group.menus
+        submenu_items = menu_group.get_items()
         for index, submenu in enumerate(submenu_items):
             print("%2i : %s" % (index + 1, submenu.title))
 
@@ -105,7 +105,8 @@ def _show_group_menu(menu_group):
         elif value.lower() == settings.quit_value:
             sys.exit(0)
 
-        if not(value.isdigit()) or (int(value) > len(submenu_items)):
+        if not(value.isdigit()) or (int(value) > len(list(submenu_items))):
+            import pdb; pdb.set_trace()
             print(settings.text['invalid_selection'])
             continue
 
@@ -222,13 +223,19 @@ class MenuGroup(object):
         self.menus = menus or []
         self.items_getter = items_getter
 
-        items_getter_args = items_getter_args if items_getter_args is not None else []
-        items_getter_kwargs = items_getter_kwargs if items_getter_kwargs is not None else {}
+        self.items_getter_args = items_getter_args if items_getter_args is not None else []
+        self.items_getter_kwargs = items_getter_kwargs if items_getter_kwargs is not None else {}
 
-        if items_getter:
-            self.menus = []
-            for (title, callback) in items_getter(*items_getter_args, **items_getter_kwargs):
-                self.menus.append(Menu(title, callback))
+    def get_items(self):
+        '''
+        Return the list of menu items in this group.
+        '''
+        if self.items_getter:
+            return [
+                Menu(title, callback) for (title, callback) in self.items_getter(*self.items_getter_args, **self.items_getter_kwargs)
+            ]
+
+        return self.menus
 
     def menu(self, *args, **kwargs):  # pylint: disable=W0613
         '''Decorator to add a menu item to our list'''
