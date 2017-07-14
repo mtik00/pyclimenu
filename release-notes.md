@@ -1,4 +1,4 @@
-# v-----
+# v1.3.0
 *   Changing the way the function docstring is used as the title.  We'll now
     run it through `.splitlines()[0].strip()`.
 *   Adding support for dynamic menu items in a group.  
