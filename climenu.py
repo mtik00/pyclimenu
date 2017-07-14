@@ -202,7 +202,7 @@ def first_line(text):
     '''
     Returns just the first line in a docstring.
     '''
-    return text.strip().split('\n')[0]
+    return text.splitlines()[0].strip()
 
 
 class Menu(object):

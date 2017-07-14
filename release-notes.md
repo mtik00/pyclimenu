@@ -1,6 +1,6 @@
 # v-----
 *   Changing the way the function docstring is used as the title.  We'll now
-    run it through `.strip().split('\n')[0]`.
+    run it through `.splitlines()[0].strip()`.
 ***
 
 # v1.2.0
