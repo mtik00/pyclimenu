@@ -66,7 +66,7 @@ class Settings(object):
 settings = Settings()  # pylint: disable=C0103
 
 
-def _show_main_menu(menu_items):
+def _show_main_menu(menu_items, break_on_invalid=False):
     '''Show the main menu and return the selected item.'''
 
     while True:
@@ -83,12 +83,16 @@ def _show_main_menu(menu_items):
 
         if not(value.isdigit()) or (int(value) <= 0) or (int(value) > len(menu_items)):
             print(settings.text['invalid_selection'])
+
+            if break_on_invalid:
+                break
+
             continue
 
         return menu_items[int(value) - 1]
 
 
-def _show_group_menu(menu_group):
+def _show_group_menu(menu_group, break_on_invalid=False):
     '''Show a submenu and return the selected item.'''
     while True:
         print(menu_group.title)
@@ -106,8 +110,11 @@ def _show_group_menu(menu_group):
             sys.exit(0)
 
         if not(value.isdigit()) or (int(value) > len(list(submenu_items))):
-            import pdb; pdb.set_trace()
             print(settings.text['invalid_selection'])
+
+            if break_on_invalid:
+                break
+
             continue
 
         return submenu_items[int(value) - 1]
