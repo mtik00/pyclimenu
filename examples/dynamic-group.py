@@ -12,7 +12,9 @@ def build_items(count):
     # thing that's determined at runtime (e.g. files in a directory).
 
     # For this case, we're simply using `xrange` to generate a range of
-    # items.
+    # items.  The function that eventually gets called takes 1 argument.
+    # Therefore, we need to use ``partial`` to pass in those arguments at
+    # runtime.
 
     items = []
     for index in xrange(count):
