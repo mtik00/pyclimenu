@@ -16,6 +16,7 @@ from .helpers import true, user_input
 from .build import build
 from .pypi import upload
 from .gh import repo_list
+from .docs import _null  # noqa: F401
 
 
 # Metadata ####################################################################
