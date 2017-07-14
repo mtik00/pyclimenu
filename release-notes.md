@@ -1,6 +1,8 @@
 # v-----
 *   Changing the way the function docstring is used as the title.  We'll now
     run it through `.splitlines()[0].strip()`.
+*   Adding support for dynamic menu items in a group.  
+    For example: `@climenu.group(items_getter, items_getter_args, items_getter_kwargs)`
 ***
 
 # v1.2.0

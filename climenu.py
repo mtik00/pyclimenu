@@ -214,9 +214,21 @@ class Menu(object):
 
 class MenuGroup(object):
     '''A group of Menu items'''
-    def __init__(self, title, menus=None):
+    def __init__(
+        self, title, menus=None, items_getter=None, items_getter_args=None,
+        items_getter_kwargs=None
+    ):
         self.title = title
         self.menus = menus or []
+        self.items_getter = items_getter
+
+        items_getter_args = items_getter_args if items_getter_args is not None else []
+        items_getter_kwargs = items_getter_kwargs if items_getter_kwargs is not None else {}
+
+        if items_getter:
+            self.menus = []
+            for (title, callback) in items_getter(*items_getter_args, **items_getter_kwargs):
+                self.menus.append(Menu(title, callback))
 
     def menu(self, *args, **kwargs):  # pylint: disable=W0613
         '''Decorator to add a menu item to our list'''
@@ -234,17 +246,24 @@ class MenuGroup(object):
         def decorator(decorated_function):
             '''create a menu group decorator'''
             menu_ = MenuGroup(
-                kwargs.get('title') or first_line(decorated_function.__doc__))
+                kwargs.get('title') or first_line(decorated_function.__doc__),
+                items_getter=kwargs.get('items_getter'),
+                items_getter_args=kwargs.get('items_getter_args'),
+                items_getter_kwargs=kwargs.get('items_getter_kwargs'))
             self.menus.append(menu_)
             return menu_
         return decorator
 
 
-def group(title=None):
+def group(title=None, items_getter=None, items_getter_args=None, items_getter_kwargs=None):
     '''A decorator to create a new MenuGroup'''
     def decorator(decorated_function):
         '''create a menu group decorator'''
-        group_ = MenuGroup(title or first_line(decorated_function.__doc__))
+        group_ = MenuGroup(
+            title or first_line(decorated_function.__doc__),
+            items_getter=items_getter,
+            items_getter_args=items_getter_args,
+            items_getter_kwargs=items_getter_kwargs)
         MENU_ITEMS.append(group_)
         return group_
     return decorator
