@@ -1,5 +1,7 @@
-coverage run -p -m py.test tests/test1
-coverage run -p -m py.test tests/test_nested
-coverage run -p -m py.test tests/test_exceptions
+FOR /F "tokens=*" %%G IN ('dir /b /a:d "tests\test*"') DO (
+    echo Found %%G
+    coverage run -p -m py.test tests/%%G
+)
+
 coverage combine
-coverage report -m --include=climenu.py
+coverage report -m
