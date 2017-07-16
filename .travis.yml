@@ -7,11 +7,12 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+
 install:
-  - pip install .
+  - pip install -e .
   - pip install pytest
 
 # command to run tests
 script:
-  - python -m pytest tests\test1
-  - python -m pytest tests\test_nested
+  - python -m pytest tests/test1
+  - python -m pytest tests/test_nested
