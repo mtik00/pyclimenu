@@ -78,28 +78,13 @@ def subsub_menu1():
     print("!!!test #3 run!!!")
 #################################################################################
 
+
 ###############################################################################
-# def test_module_funcs():
-#     '''hack coverage for this test function'''
-#     assert build_package.callback()
-#     assert build_release.callback()
-#     assert func_1.callback()
-#     assert func_2.callback()
-
-
 def test_main_items():
     '''There should be no items in the main menu'''
     items = [x for x in climenu.MENU_ITEMS if type(x) is climenu.Menu]
-    assert len(items) == 0
-
-
-# def test_item_titles():
-#     '''Test the titles of all items'''
-#     items = [x for x in climenu.MENU_ITEMS if type(x) is climenu.Menu]
-#     assert items[0].title == 'Build the package'
-#     assert items[1].title == 'Build the release'
-#     assert items[2].title == 'Run test #1'
-#     assert items[3].title == 'Run test #2'
+    num_items = len(items)
+    assert num_items == 0
 
 
 def test_groups():
@@ -110,6 +95,7 @@ def test_groups():
 
 def test_show_menu(monkeypatch):
     def mockreturn(prompt):
+        '''t'''
         return '1'
 
     monkeypatch.setattr(climenu, 'get_user_input', mockreturn)
@@ -117,14 +103,59 @@ def test_show_menu(monkeypatch):
 
     # Provide the "back" item
     def mockreturn2(prompt):
-            return climenu.settings.back_values[0]
+        '''t'''
+        return climenu.settings.back_values[0]
 
     monkeypatch.setattr(climenu, 'get_user_input', mockreturn2)
     climenu._show_main_menu(climenu.MENU_ITEMS)
 
     # Provide an invalid selection
+    def mockreturn3(prompt):
+        '''t'''
+        return '99'
+
+    monkeypatch.setattr(climenu, 'get_user_input', mockreturn3)
+    climenu._show_main_menu(climenu.MENU_ITEMS, break_on_invalid=True)
+
+
+def test_show_submenu(monkeypatch):
+    def mockreturn(prompt):
+        '''t'''
+        return '1'
+
+    monkeypatch.setattr(climenu, 'get_user_input', mockreturn)
+
+    climenu._show_group_menu(climenu.MENU_ITEMS[1])
+
+    # Provide the "back" item
     def mockreturn2(prompt):
-            return '99'
+        '''t'''
+        return climenu.settings.back_values[0]
 
     monkeypatch.setattr(climenu, 'get_user_input', mockreturn2)
-    climenu._show_main_menu(climenu.MENU_ITEMS, break_on_invalid=True)
+    climenu._show_group_menu(climenu.MENU_ITEMS[1])
+
+    # Provide the "back" item
+    def mockreturn3(prompt):
+        '''t'''
+        return climenu.settings.quit_value
+
+    monkeypatch.setattr(climenu, 'get_user_input', mockreturn3)
+    climenu._show_group_menu(climenu.MENU_ITEMS[1])
+
+    # Provide an invalid selection
+    def mockreturn4(prompt):
+        '''t'''
+        return '99'
+
+    monkeypatch.setattr(climenu, 'get_user_input', mockreturn4)
+    climenu._show_group_menu(climenu.MENU_ITEMS[1], break_on_invalid=True)
+
+
+def test_run(monkeypatch):
+    def mockreturn(prompt):
+        '''t'''
+        return climenu.settings.back_values[0]
+
+    monkeypatch.setattr(climenu, 'get_user_input', mockreturn)
+    climenu.run()

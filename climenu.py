@@ -106,8 +106,8 @@ def _show_group_menu(menu_group, break_on_invalid=False):
 
         if value in settings.back_values:
             return None
-        elif value.lower() == settings.quit_value:
-            sys.exit(0)
+        elif value.lower() in settings.back_values + [settings.quit_value]:
+            return None
 
         if not(value.isdigit()) or (int(value) > len(list(submenu_items))):
             print(settings.text['invalid_selection'])
