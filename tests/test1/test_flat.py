@@ -4,10 +4,10 @@ from __future__ import print_function
 import sys
 import os
 
+import climenu
+
 if sys.version_info[0] < 3:
     import __builtin__
-
-import climenu
 
 
 @climenu.menu()
