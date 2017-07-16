@@ -18,4 +18,6 @@ script:
   - coverage run -p -m py.test tests/test_nested
   - coverage run -p -m py.test tests/test_exceptions
 
-after_success: coveralls
+after_success:
+  - coverage combine
+  - coveralls
