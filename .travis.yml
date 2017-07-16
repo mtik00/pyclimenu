@@ -12,4 +12,6 @@ install:
   - pip install pytest
 
 # command to run tests
-script: python -m pytest
+script:
+  - python -m pytest tests\test1
+  - python -m pytest tests\test_nested
