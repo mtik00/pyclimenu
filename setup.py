@@ -12,25 +12,26 @@ VER_PATH = 'climenu.py'
 
 
 def get_version():
+    '''get's the current version from the source file'''
     re_ver = re.compile(
-        '^__version__\s*=\s+[\'"](?P<version>.*?)[\'"]', re.MULTILINE)
+        r'^__version__\s*=\s+[\'"](?P<version>.*?)[\'"]', re.MULTILINE)
     text = open(VER_PATH).read()
     return re_ver.search(text).group('version')
 
 
 if __name__ == '__main__':
     DESC = open('README.rst').read()
-    version = get_version()
+    VERSION = get_version()
 
     setup(
         name="climenu",
         py_modules=['climenu'],
-        version=version,
+        version=VERSION,
         description="Command-line menu system",
         url="https://github.com/mtik00/pyclimenu",
         download_url=(
             "https://github.com/mtik00/pyclimenu/releases/download/v{0}"
-            "/climenu-{0}.tar.gz").format(version),
+            "/climenu-{0}.tar.gz").format(VERSION),
 
         keywords='cli command-line menu',
 
