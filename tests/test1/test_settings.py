@@ -6,8 +6,8 @@ climenu.settings.text['main_menu_title'] = 'Application AAA Management'
 
 
 def test_submenu_prompt():
-    assert climenu.settings.get_submenu_prompt() is not None
+    assert climenu.settings.get_submenu_prompt()
 
 
 def test_main_menu_prompt():
-    assert climenu.settings.get_main_menu_prompt() is not None
+    assert climenu.settings.get_main_menu_prompt()

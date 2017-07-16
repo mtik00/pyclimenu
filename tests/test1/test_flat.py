@@ -57,26 +57,17 @@ def test_item_titles():
 def test_groups():
     '''We shouldn't have any groups'''
     groups = [x for x in climenu.MENU_ITEMS if type(x) is climenu.MenuGroup]
-    assert len(groups) == 0
+    assert not groups
 
 
 def test_show_menu(monkeypatch):
-    def mockreturn(prompt):
-        return '1'
-
-    monkeypatch.setattr(climenu, 'get_user_input', mockreturn)
+    monkeypatch.setattr(climenu, 'get_user_input', lambda x: '1')
     climenu._show_main_menu(climenu.MENU_ITEMS)
 
     # Provide the "back" item
-    def mockreturn2(prompt):
-            return climenu.settings.back_values[0]
-
-    monkeypatch.setattr(climenu, 'get_user_input', mockreturn2)
+    monkeypatch.setattr(climenu, 'get_user_input', lambda x: climenu.settings.back_values[0])
     climenu._show_main_menu(climenu.MENU_ITEMS)
 
     # Provide an invalid selection
-    def mockreturn2(prompt):
-            return '99'
-
-    monkeypatch.setattr(climenu, 'get_user_input', mockreturn2)
+    monkeypatch.setattr(climenu, 'get_user_input', lambda x: '99')
     climenu._show_main_menu(climenu.MENU_ITEMS, break_on_invalid=True)
