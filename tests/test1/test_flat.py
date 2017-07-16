@@ -1,6 +1,10 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 from __future__ import print_function
+import __builtin__
+import os
+import sys
+
 import climenu
 
 
@@ -71,3 +75,28 @@ def test_show_menu(monkeypatch):
     # Provide an invalid selection
     monkeypatch.setattr(climenu, 'get_user_input', lambda x: '99')
     climenu._show_main_menu(climenu.MENU_ITEMS, break_on_invalid=True)
+
+
+def test_get_user_input(monkeypatch):
+    if sys.version_info.major == 2:
+        monkeypatch.setattr(__builtin__, 'raw_input', lambda: '3')
+    else:
+        monkeypatch.setattr(__builtin__, 'input', lambda: '3')
+
+    assert climenu.get_user_input('test') == '3'
+
+
+def test_clear_screen(monkeypatch):
+    (is_win, is_lin) = ('win' in sys.platform, 'lin' in sys.platform)
+
+    monkeypatch.setattr(os, 'system', lambda x: None)
+
+    climenu.IS_WIN = True
+    climenu.IS_LIN = False
+    climenu.clear_screen()
+
+    climenu.IS_WIN = False
+    climenu.IS_LIN = True
+    climenu.clear_screen()
+
+    (climenu.IS_WIN, climenu.IS_LIN) = (is_win, is_lin)

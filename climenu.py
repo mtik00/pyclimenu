@@ -186,7 +186,7 @@ def clear_screen():
             "Your platform has not been implemented: %s" % sys.platform)
 
 
-def get_user_input(prompt=None, test_value=None):
+def get_user_input(prompt=None):
     '''
     Prompt the user for input.
 
@@ -196,9 +196,6 @@ def get_user_input(prompt=None, test_value=None):
     '''
     if prompt:
         print(prompt, end='')
-
-    if test_value is not None:
-        return test_value
 
     if sys.version_info.major == 2:
         return raw_input()

@@ -14,9 +14,10 @@ install:
 
 # command to run tests
 script:
-  - coverage run --include="climenu.py" -p -m py.test tests/test1
-  - coverage run --include="climenu.py" -p -m py.test tests/test_nested
+  - coverage run --include="climenu.py" -p -m py.test tests/test_dynamic
   - coverage run --include="climenu.py" -p -m py.test tests/test_exceptions
+  - coverage run --include="climenu.py" -p -m py.test tests/test_nested
+  - coverage run --include="climenu.py" -p -m py.test tests/test1
 
 after_success:
   - coverage combine
