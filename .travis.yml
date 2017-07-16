@@ -15,8 +15,8 @@ install:
 
 # command to run tests
 script:
-  - python -m coverage run -p -m py.test tests/test1
-  - python -m coverage run -p -m py.test tests/test_nested
-  - python -m coverage run -p -m py.test tests/test_exceptions
+  - coverage run -p -m py.test tests/test1
+  - coverage run -p -m py.test tests/test_nested
+  - coverage run -p -m py.test tests/test_exceptions
 
 after_success: coveralls
