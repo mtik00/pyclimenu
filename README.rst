@@ -1,6 +1,9 @@
 .. image:: https://travis-ci.org/mtik00/pyclimenu.svg?branch=master
     :target: https://travis-ci.org/mtik00/pyclimenu
 
+.. image:: https://coveralls.io/repos/github/mtik00/pyclimenu/badge.svg?branch=master
+    :target: https://coveralls.io/github/mtik00/pyclimenu?branch=master
+
 climenu
 =======
 This project is used to create *simple* command-line interfaces using

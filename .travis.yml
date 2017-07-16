@@ -11,11 +11,12 @@ python:
 install:
   - pip install -e .
   - pip install pytest
+  - pip install coveralls
 
 # command to run tests
 script:
-  - python -m pytest tests/test1
-  - python -m pytest tests/test_nested
-  - python -m pytest tests/test_exceptions
+  - python -m coverage run -p -m py.test tests/test1
+  - python -m coverage run -p -m py.test tests/test_nested
+  - python -m coverage run -p -m py.test tests/test_exceptions
 
 after_success: coveralls
