@@ -78,7 +78,7 @@ def test_show_menu(monkeypatch):
 
 
 def test_get_user_input(monkeypatch):
-    if sys.version_info.major == 2:
+    if sys.version_info[0] == 2:
         monkeypatch.setattr(__builtin__, 'raw_input', lambda: '3')
     else:
         monkeypatch.setattr(__builtin__, 'input', lambda: '3')

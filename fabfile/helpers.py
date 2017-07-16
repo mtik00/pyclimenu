@@ -19,10 +19,10 @@ __creationDate__ = '13-APR-2017'
 # Globals #####################################################################
 def user_input(prompt, default=None):
     '''Gets input from the user'''
-    if sys.version_info.major > 2:
-        answer = input(prompt)
-    else:
+    if sys.version_info[0] == 2:
         answer = raw_input(prompt)
+    else:
+        answer = input(prompt)
 
     return answer or default
 
