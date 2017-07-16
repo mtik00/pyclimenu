@@ -4,6 +4,9 @@
 .. image:: https://coveralls.io/repos/github/mtik00/pyclimenu/badge.svg?branch=master
     :target: https://coveralls.io/github/mtik00/pyclimenu?branch=master
 
+.. image:: https://img.shields.io/pypi/v/climenu.svg
+    :target: https://pypi.python.org/pypi/climenu
+
 climenu
 =======
 This project is used to create *simple* command-line interfaces using
