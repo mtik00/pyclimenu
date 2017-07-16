@@ -13,13 +13,13 @@ def build_items(count):
     # In this example, we're generating menu items based on some
     # thing that's determined at runtime (e.g. files in a directory).
 
-    # For this case, we're simply using `xrange` to generate a range of
+    # For this case, we're simply using `range` to generate a range of
     # items.  The function that eventually gets called takes 1 argument.
     # Therefore, we need to use ``partial`` to pass in those arguments at
     # runtime.
 
     items = []
-    for index in xrange(count):
+    for index in range(count):
         items.append(
             (
                 'Run item %i' % (index + 1),
