@@ -1,9 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 from __future__ import print_function
-import __builtin__
-import os
 import sys
+import os
+
+if sys.version_info[0] < 3:
+    import __builtin__
 
 import climenu
 
@@ -81,7 +83,7 @@ def test_get_user_input(monkeypatch):
     if sys.version_info[0] == 2:
         monkeypatch.setattr(__builtin__, 'raw_input', lambda: '3')
     else:
-        monkeypatch.setattr(__builtin__, 'input', lambda: '3')
+        monkeypatch.setitem(__builtins__, 'input', lambda: '3')
 
     assert climenu.get_user_input('test') == '3'
 
