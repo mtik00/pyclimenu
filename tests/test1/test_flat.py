@@ -102,3 +102,19 @@ def test_clear_screen(monkeypatch):
     climenu.clear_screen()
 
     (climenu.IS_WIN, climenu.IS_LIN) = (is_win, is_lin)
+
+
+def test_run(monkeypatch):
+
+    def user_input(prompt=None):
+        user_input.calls += 1
+        if user_input.calls == 1:
+            return '1'
+        elif user_input.calls == 2:
+            return '0'
+        else:
+            return 'q'
+
+    user_input.calls = 0
+    monkeypatch.setattr(climenu, 'get_user_input', user_input)
+    climenu.run()
