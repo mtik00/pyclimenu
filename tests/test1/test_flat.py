@@ -3,6 +3,7 @@
 from __future__ import print_function
 import sys
 import os
+import pytest
 
 import climenu
 
@@ -117,4 +118,6 @@ def test_run(monkeypatch):
 
     user_input.calls = 0
     monkeypatch.setattr(climenu, 'get_user_input', user_input)
-    climenu.run()
+
+    with pytest.raises(SystemExit):
+        climenu.run()
