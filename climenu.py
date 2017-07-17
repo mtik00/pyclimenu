@@ -152,10 +152,14 @@ def run():
             if back_one != current_group:
                 current_group = back_one
             elif menu_stack:
-                # Pop another one off
+                # Pop another one off.
+                # This only happens when going 'back' from a nested submenu.
                 current_group = menu_stack.pop()
+                print(current_group)
             else:
                 # Show the main menu (nothing left in the stack)
+                # This only happens when going 'back' from the first submenu
+                # in main menu.
                 current_group = None
             continue  # pragma: no cover
 

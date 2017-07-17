@@ -42,6 +42,7 @@ def test2():
     return True
 ###############################################################################
 
+
 ###############################################################################
 # Create an empty function to serve as a menu group
 @climenu.group()
@@ -129,7 +130,22 @@ def test_run(monkeypatch):
 
 def test_run_full(monkeypatch):
 
-    my_sequence = (x for x in ['a', '2', '3', '99', '1', '', '0', '99', '0', 'q'])
+    items = [
+        'a',  # Main Menu -- invalid
+        '2',  # Main Menu -- Test Functions
+        '0',  # Back to Main Menu
+        '2',  # Main Menu -- Test Functions
+        '3',  # Test Functions -- Another testing menu
+        '0',  # Back to Test Functions
+        '3',  # Test Functions -- Another testing menu
+        '99',  # Another testing menu -- invalid
+        '1',  # Another testing menu -- Run test #3
+        '',  # Press Enter to continue
+        '0',  # Back to Test Functions
+        # '0',  # Back to Main Menu  <-- current defect
+        'q'  # Main Menu -- quit
+    ]
+    my_sequence = (x for x in items)
 
     def user_input(prompt=None):
         user_input.calls += 1
@@ -141,4 +157,4 @@ def test_run_full(monkeypatch):
     with pytest.raises(SystemExit):
         climenu.run()
 
-    assert user_input.calls == 10
+    assert user_input.calls == len(items)
