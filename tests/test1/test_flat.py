@@ -107,17 +107,16 @@ def test_clear_screen(monkeypatch):
 
 def test_run(monkeypatch):
 
+    my_sequence = (x for x in ['1', '', 'q'])
+
     def user_input(prompt=None):
         user_input.calls += 1
-        if user_input.calls == 1:
-            return '1'
-        elif user_input.calls == 2:
-            return '0'
-        else:
-            return 'q'
+        return next(my_sequence)
 
     user_input.calls = 0
     monkeypatch.setattr(climenu, 'get_user_input', user_input)
 
     with pytest.raises(SystemExit):
         climenu.run()
+
+    assert user_input.calls == 3

@@ -14,6 +14,7 @@ Notice how the decorators change from `@climenu` to `@build_menu` and
 `@test_menu`.
 '''
 from __future__ import print_function
+import pytest
 import climenu
 
 
@@ -124,3 +125,20 @@ def test_show_submenu(monkeypatch):
 def test_run(monkeypatch):
     monkeypatch.setattr(climenu, 'get_user_input', lambda x: climenu.settings.back_values[0])
     climenu.run()
+
+
+def test_run_full(monkeypatch):
+
+    my_sequence = (x for x in ['2', '3', '1', '', '0', 'q'])
+
+    def user_input(prompt=None):
+        user_input.calls += 1
+        return next(my_sequence)
+
+    user_input.calls = 0
+    monkeypatch.setattr(climenu, 'get_user_input', user_input)
+
+    with pytest.raises(SystemExit):
+        climenu.run()
+
+    assert user_input.calls == 6
