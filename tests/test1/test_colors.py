@@ -4,38 +4,55 @@ from __future__ import print_function
 import climenu
 
 
+def test_all_colors():
+    fg_code = '[3'
+    bg_code = '[4'
+
+    for color in ['black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white']:
+        for bg in [True, False]:
+            for bright in [True, False]:
+                func = getattr(climenu.colors, color)
+                value = func(text='testing', bg=bg, bright=bright)
+                assert value.startswith('\033')
+                assert 'testing\033' in value
+                if bg:
+                    assert bg_code in value
+                else:
+                    assert fg_code in value
+
+
 def test_black():
-    climenu.colors.black('test')
+    assert climenu.colors.black('test')
 
 
 def test_red():
-    climenu.colors.red('test')
+    assert climenu.colors.red('test')
 
 
 def test_green():
-    climenu.colors.green('test')
+    assert climenu.colors.green('test')
 
 
 def test_yellow():
-    climenu.colors.yellow('test')
+    assert climenu.colors.yellow('test')
 
 
 def test_blue():
-    climenu.colors.blue('test')
+    assert climenu.colors.blue('test')
 
 
 def test_magenta():
-    climenu.colors.magenta('test')
+    assert climenu.colors.magenta('test')
 
 
 def test_cyan():
-    climenu.colors.cyan('test')
+    assert climenu.colors.cyan('test')
 
 
 def test_white():
-    climenu.colors.white('test')
+    assert climenu.colors.white('test')
 
 
 def test_disable():
     climenu.settings.disable_colors = True
-    climenu.colors.black('test')
+    assert climenu.colors.black('test') == 'test'
