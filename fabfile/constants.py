@@ -16,3 +16,5 @@ __creationDate__ = '13-APR-2017'
 THIS_DIR = os.path.abspath(os.path.dirname(__file__))
 LIB_DIR = os.path.join(THIS_DIR, '..')
 VER_FILE = os.path.join(LIB_DIR, 'climenu.py')
+DIST_DIR = os.path.join(LIB_DIR, 'dist')
+RELEASE_NOTES_FILE = os.path.join(LIB_DIR, 'release-notes.md')

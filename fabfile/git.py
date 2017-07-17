@@ -5,6 +5,9 @@ This module hold fabric management functions dealing with Git
 '''
 
 # Imports #####################################################################
+from collections import namedtuple
+from pkg_resources import parse_version
+
 from fabric.api import task
 from fabric.utils import abort
 from .helpers import ex, user_input, true
@@ -17,6 +20,10 @@ __creationDate__ = '14-APR-2017'
 
 
 # Globals #####################################################################
+
+VERSIONED_TAG = namedtuple('VersionedTag', 'string version')
+
+
 def on_master():
     '''Returns True if we're currently on the master branch'''
     (text, _) = ex(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
@@ -29,14 +36,16 @@ def is_clean():
     return (not bool(text), text)
 
 
+@task
 def get_tags():
     '''Returns a list of tags'''
-    (text, _) = ex(['git', 'tag', '-l', '--sort=version:refname', '"*"'])
+    result = []
+    (text, _) = ex('git tag -l --sort=version:refname "*"')
 
-    if text:
-        return text.split('\n')
+    for line in text.splitlines():
+        result.append(VERSIONED_TAG(line, parse_version(line)))
 
-    return []
+    return sorted(result, cmp=lambda x, y: cmp(x.version, y.version))
 
 
 @task
@@ -47,7 +56,7 @@ def tag():
 
     print("...current version is: %s" % current_version)
     if tags:
-        print("...latest tag is: %s" % tags[-1])
+        print("...latest tag is: %s" % tags[-1].string)
 
     name = user_input("Enter tag to create: ")
     name = "v" + name if not name.startswith('v') else name

@@ -94,3 +94,8 @@ def remove_directory(top, remove_top=True, filter=None):
             os.rmdir(top)
         except OSError as e:
             print("error removing top:", e.message, file=sys.stderr)
+
+
+def abspath(*args):
+    '''Returns the absolute path of join(*args).'''
+    return os.path.abspath(os.path.join(*args))
