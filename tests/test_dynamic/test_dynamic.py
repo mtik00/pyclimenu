@@ -1,5 +1,6 @@
 from __future__ import print_function
 from functools import partial
+import pytest
 
 import climenu
 
@@ -92,4 +93,6 @@ def test_run(monkeypatch):
     monkeypatch.setattr(climenu, 'get_user_input', lambda x: climenu.settings.back_values[0])
     climenu.run()
 
-
+    monkeypatch.setattr(climenu, 'get_user_input', lambda x: climenu.settings.quit_value)
+    with pytest.raises(SystemExit):
+        climenu.run()
