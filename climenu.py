@@ -89,7 +89,7 @@ def _show_main_menu(menu_items, break_on_invalid=False):
             if break_on_invalid:
                 break
 
-            continue
+            continue  # pragma: no cover (covered in `test_nested`)
 
         return menu_items[int(value) - 1]
 
@@ -117,7 +117,7 @@ def _show_group_menu(menu_group, break_on_invalid=False):
             if break_on_invalid:
                 break
 
-            continue
+            continue  # pragma: no cover (covered in `test_nested`)
 
         return submenu_items[int(value) - 1]
 
@@ -157,7 +157,7 @@ def run():
             else:
                 # Show the main menu (nothing left in the stack)
                 current_group = None
-            continue
+            continue  # pragma: no cover
 
         # Check for a sub-menu.  Sub-menu's don't
         # have a callback, so just set the current
@@ -165,7 +165,7 @@ def run():
         if isinstance(menu_item, MenuGroup):
             menu_stack.append(menu_item)
             current_group = menu_item
-            continue
+            continue  # pragma: no cover
 
         # If we should show the *main* menu, then
         # ``menu_item`` will be None here.

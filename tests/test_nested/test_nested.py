@@ -129,7 +129,7 @@ def test_run(monkeypatch):
 
 def test_run_full(monkeypatch):
 
-    my_sequence = (x for x in ['2', '3', '1', '', '0', 'q'])
+    my_sequence = (x for x in ['a', '2', '3', '99', '1', '', '0', '99', '0', 'q'])
 
     def user_input(prompt=None):
         user_input.calls += 1
@@ -141,4 +141,4 @@ def test_run_full(monkeypatch):
     with pytest.raises(SystemExit):
         climenu.run()
 
-    assert user_input.calls == 6
+    assert user_input.calls == 10
