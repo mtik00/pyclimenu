@@ -1,3 +1,7 @@
+# v------
+*   FIX: 'q' doesn't actually quit from a submenu
+***
+
 # v1.3.0
 *   Changing the way the function docstring is used as the title.  We'll now
     run it through `.splitlines()[0].strip()`.
