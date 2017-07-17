@@ -1,6 +1,7 @@
 # v------
-*   FIX: 'q' doesn't actually quit from a submenu
 *   Adding the ability to pre-select menu items during `run()`
+*   FIX: 'q' doesn't actually quit from a submenu
+*   FIX: Issue with menu stack getting corrupted causing issues with `back`
 ***
 
 # v1.3.0
