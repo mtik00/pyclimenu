@@ -238,6 +238,9 @@ class Menu(object):
         self.callback = callback
         self.title = title
 
+    def __str__(self):
+        return '<Menu "%s">' % self.title
+
 
 class MenuGroup(object):
     '''A group of Menu items'''
@@ -251,6 +254,9 @@ class MenuGroup(object):
 
         self.items_getter_args = items_getter_args if items_getter_args is not None else []
         self.items_getter_kwargs = items_getter_kwargs if items_getter_kwargs is not None else {}
+
+    def __str__(self):
+        return '<MenuGroup "%s">' % self.title
 
     def get_items(self):
         '''

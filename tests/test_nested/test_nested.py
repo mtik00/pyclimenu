@@ -98,6 +98,9 @@ def test_groups():
     groups = [x for x in climenu.MENU_ITEMS if type(x) is climenu.MenuGroup]
     assert len(groups) == 2
 
+    for group in groups:
+        assert str(group).startswith('<MenuGroup')
+
 
 def test_show_menu(monkeypatch):
     monkeypatch.setattr(climenu, 'get_user_input', lambda x: '1')

@@ -51,6 +51,9 @@ def test_items():
     items = [x for x in climenu.MENU_ITEMS if type(x) is climenu.Menu]
     assert len(items) == 4
 
+    for item in items:
+        assert str(item).startswith('<Menu ')
+
 
 def test_item_titles():
     '''Test the titles of all items'''
