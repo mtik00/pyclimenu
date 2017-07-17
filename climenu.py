@@ -78,7 +78,9 @@ def _show_main_menu(menu_items, break_on_invalid=False):
         print()
         value = get_user_input(settings.get_main_menu_prompt())
 
-        if value.lower() in settings.back_values + [settings.quit_value]:
+        if value.lower() == settings.quit_value:
+            return settings.quit_value
+        elif value.lower() in settings.back_values:
             return None
 
         if not(value.isdigit()) or (int(value) <= 0) or (int(value) > len(menu_items)):
@@ -104,9 +106,9 @@ def _show_group_menu(menu_group, break_on_invalid=False):
         print()
         value = get_user_input(settings.get_submenu_prompt())
 
-        if value in settings.back_values:
-            return None
-        elif value.lower() in settings.back_values + [settings.quit_value]:
+        if value.lower() == settings.quit_value:
+            return settings.quit_value
+        elif value.lower() in settings.back_values:
             return None
 
         if not(value.isdigit()) or (int(value) > len(list(submenu_items))):
@@ -141,6 +143,9 @@ def run():
                 break
         else:
             menu_item = _show_group_menu(current_group)
+
+        if menu_item == settings.quit_value:
+            sys.exit(0)
 
         if (not menu_item) and menu_stack:
             back_one = menu_stack.pop()
