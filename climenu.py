@@ -23,6 +23,7 @@ __all__ = [
 ]
 (IS_WIN, IS_LIN) = ('win' in sys.platform, 'lin' in sys.platform)
 MENU_ITEMS = []
+PRESELECTED_MENU = None
 
 
 class Settings(object):
@@ -122,12 +123,16 @@ def _show_group_menu(menu_group, break_on_invalid=False):
         return submenu_items[int(value) - 1]
 
 
-def run():
+def run(preselected_menu=None):
     '''
     Runs the menuing system.
     '''
+    global PRESELECTED_MENU
     menu_stack = []
     current_group = None
+
+    if preselected_menu:
+        PRESELECTED_MENU = (x for x in preselected_menu)
 
     if not MENU_ITEMS:
         raise ValueError("No menu items defined")
@@ -203,8 +208,16 @@ def get_user_input(prompt=None):
     :param var test_value: If this is not none, the user will not be prompted
         and this value is returned.
     '''
+    global PRESELECTED_MENU
+
     if prompt:
         print(prompt, end='')
+
+    if PRESELECTED_MENU:
+        try:
+            return next(PRESELECTED_MENU)
+        except StopIteration:
+            PRESELECTED_MENU = None
 
     if sys.version_info[0] == 2:
         return raw_input()

@@ -14,8 +14,12 @@ Notice how the decorators change from `@climenu` to `@build_menu` and
 `@test_menu`.
 '''
 from __future__ import print_function
+import sys
 import pytest
 import climenu
+
+if sys.version_info[0] < 3:
+    import __builtin__
 
 
 ###############################################################################
@@ -158,3 +162,17 @@ def test_run_full(monkeypatch):
         climenu.run()
 
     assert user_input.calls == len(items)
+
+
+def test_run_preselected(monkeypatch):
+    '''
+    Test for `preselected_menu` running out of items followed by
+    quitting the application.
+    '''
+    if sys.version_info[0] == 2:
+        monkeypatch.setattr(__builtin__, 'raw_input', lambda: 'q')
+    else:
+        monkeypatch.setitem(__builtins__, 'input', lambda: 'q')
+
+    with pytest.raises(SystemExit):
+        climenu.run(['2', '3'])

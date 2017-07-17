@@ -1,5 +1,6 @@
 # v------
 *   FIX: 'q' doesn't actually quit from a submenu
+*   Adding the ability to pre-select menu items during `run()`
 ***
 
 # v1.3.0
