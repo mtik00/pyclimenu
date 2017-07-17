@@ -153,26 +153,17 @@ def run(preselected_menu=None):
             sys.exit(0)
 
         if (not menu_item) and menu_stack:
-            back_one = menu_stack.pop()
-            if back_one != current_group:
-                current_group = back_one
-            elif menu_stack:
-                # Pop another one off.
-                # This only happens when going 'back' from a nested submenu.
+            menu_stack.pop()
+            if menu_stack:
                 current_group = menu_stack.pop()
-                print(current_group)
-            else:
-                # Show the main menu (nothing left in the stack)
-                # This only happens when going 'back' from the first submenu
-                # in main menu.
-                current_group = None
+
             continue  # pragma: no cover
 
         # Check for a sub-menu.  Sub-menu's don't
         # have a callback, so just set the current
         # group and loop.
         if isinstance(menu_item, MenuGroup):
-            menu_stack.append(menu_item)
+            menu_stack += [current_group, menu_item]
             current_group = menu_item
             continue  # pragma: no cover
 
@@ -181,12 +172,6 @@ def run(preselected_menu=None):
         if menu_item:
             menu_item.callback()
             get_user_input(settings.text['continue'])
-        else:
-            # Nothing left in the stack; make
-            # ``current_group == None`` so we'll
-            # show the main menu the next time through
-            # the loop.
-            current_group = None
 
 
 def clear_screen():
@@ -209,20 +194,24 @@ def get_user_input(prompt=None):
         and this value is returned.
     '''
     global PRESELECTED_MENU
+    result = None
 
     if prompt:
         print(prompt, end='')
 
     if PRESELECTED_MENU:
         try:
-            return next(PRESELECTED_MENU)
+            result = next(PRESELECTED_MENU)
+            return result
         except StopIteration:
             PRESELECTED_MENU = None
 
     if sys.version_info[0] == 2:
-        return raw_input()
+        result = raw_input()
     else:
-        return input()
+        result = input()
+
+    return result
 
 
 def first_line(text):

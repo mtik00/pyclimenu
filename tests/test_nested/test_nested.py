@@ -149,7 +149,7 @@ def test_run_full(monkeypatch):
         '1',  # Another testing menu -- Run test #3
         '',  # Press Enter to continue
         '0',  # Back to Test Functions
-        # '0',  # Back to Main Menu  <-- current defect
+        '0',  # Back to Main Menu
         'q'  # Main Menu -- quit
     ]
     my_sequence = (x for x in items)
