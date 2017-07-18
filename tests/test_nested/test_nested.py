@@ -127,7 +127,7 @@ def test_show_submenu(monkeypatch):
     climenu._show_group_menu(climenu.MENU_ITEMS[1])
 
     # Provide an invalid selection
-    monkeypatch.setattr(climenu, 'get_user_input', lambda x: '99')
+    monkeypatch.setattr(climenu, 'get_user_input', lambda x: 'a')
     climenu._show_group_menu(climenu.MENU_ITEMS[1], break_on_invalid=True)
 
 
@@ -199,9 +199,33 @@ def test_run_preselected(monkeypatch):
     quitting the application.
     '''
     if sys.version_info[0] == 2:
-        monkeypatch.setattr(__builtin__, 'raw_input', lambda: 'q')
+        monkeypatch.setattr(__builtin__, 'raw_input', lambda: climenu.settings.quit_value)
     else:
-        monkeypatch.setitem(__builtins__, 'input', lambda: 'q')
+        monkeypatch.setitem(__builtins__, 'input', lambda: climenu.settings.quit_value)
 
     with pytest.raises(SystemExit):
         climenu.run(['2', '3'])
+
+
+def test_run_invalid(capsys):
+    '''
+    Test for `preselected_menu` with an invalid item.
+    '''
+    with pytest.raises(SystemExit):
+        climenu.run(['2', '99', climenu.settings.quit_value])
+
+    out, err = capsys.readouterr()
+
+    assert climenu.settings.text['invalid_selection'] in out
+
+
+def test_run_valid(capsys):
+    '''
+    Test for `preselected_menu` with an invalid item.
+    '''
+    with pytest.raises(SystemExit):
+        climenu.run(['2', climenu.settings.quit_value])
+
+    out, err = capsys.readouterr()
+
+    assert climenu.settings.text['invalid_selection'] not in out
