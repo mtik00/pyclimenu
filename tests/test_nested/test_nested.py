@@ -14,6 +14,7 @@ Notice how the decorators change from `@climenu` to `@build_menu` and
 `@test_menu`.
 '''
 from __future__ import print_function
+import re
 import sys
 import pytest
 import climenu
@@ -135,7 +136,7 @@ def test_run(monkeypatch):
     climenu.run()
 
 
-def test_run_full(monkeypatch):
+def test_run_full(monkeypatch, capsys):
 
     items = [
         'a',  # Main Menu -- invalid
@@ -165,6 +166,31 @@ def test_run_full(monkeypatch):
         climenu.run()
 
     assert user_input.calls == len(items)
+
+    out, err = capsys.readouterr()
+
+    assert not err
+
+    re_menus = re.compile('''
+    ^main\smenu.*?
+    invalid\sselection.*?
+    main\smenu.*?
+    test\sfunctions.*?
+    main\smenu.*?
+    test\sfunctions.*?
+    another\stesting\smenu.*?
+    test\sfunctions.*?
+    another\stesting\smenu.*?
+    invalid\sselection.*?
+    another\stesting\smenu.*?
+    !!!test\s\#3\srun!!!.*?
+    another\stesting\smenu.*?
+    test\sfunctions.*?
+    main\smenu.*?
+    $
+    ''', re.IGNORECASE | re.VERBOSE | re.DOTALL)
+
+    assert re_menus.match(out)
 
 
 def test_run_preselected(monkeypatch):
