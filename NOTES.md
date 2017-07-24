@@ -2,16 +2,17 @@
 
 This project is used to create *simple* command-line interfaces using text-based menus.
 
-The interface loosely mimiks [click](http://click.pocoo.org).
+The interface loosely mimics [click](http://click.pocoo.org).
 
-## Managements
+## Management
 
 To manage the project, you'll need to install the project's requirements file:  
 `pip install -r proj-requirements.txt`
 
 ## Documentation
 *   Use `sphinx-autobuild` when changing docs (makes it much easier):  
-    `sphinx-autobuild docs docs/_build/html`
+    `sphinx-autobuild docs docs/_build/html`  
+    or `fab docs.serve`
 
 ## Releasing
 *   Make sure everything is checked in and pushed
