@@ -61,6 +61,30 @@ Once the user enters ``1``, the second menu will be shown::
 
 You can have any number of groups associated with other groups.
 
+Menu Group Subtitles
+--------------------
+
+Menu groups can have an optional subtitle.  This will be displayed on the line
+immediately following the title.
+
+The subtitle can be either a ``callable`` (which returns a string) or a string.
+
+The subtitle will only be shown when the menu group is the main menu displayed.
+That is, the subtitle will not be shown when the *main* menu is a list of menu
+groups.
+
+.. CAUTION::
+    The callable return will not be cached.  You may want to take steps to do
+    that in case the callable is time consuming.
+
+.. code-block:: python
+
+    import climenu
+
+    @climenu.group(title='Build Menu', subtitle='building stuff')
+    def build_group(): pass
+
+
 Menu Titles
 +++++++++++
 
@@ -101,6 +125,27 @@ look at ``build_release()``, where both ``title`` and docstring are used:
 
     if __name__ == '__main__':
         main()
+
+You may also use a ``callable`` object to get the title of a menu item/group.
+This is handy if you need to run some code in order to calculate the title.
+
+.. CAUTION::
+    The callable must return a string!
+
+.. CAUTION::
+    The callable return will not be cached.  You may want to take steps to do
+    that in case the callable is time consuming.
+
+.. code-block:: python
+
+    import climenu
+
+    def myfunction():
+        return 'Build Menu'
+
+    @climenu.menu(title=myfunction)
+    def a_function(): pass
+
 
 Mutliple Files
 ++++++++++++++

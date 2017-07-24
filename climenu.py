@@ -103,6 +103,9 @@ def _show_group_menu(menu_group, break_on_invalid=False):
     while True:
         print(menu_group.title)
 
+        if menu_group.subtitle:
+            print(menu_group.subtitle)
+
         submenu_items = menu_group.get_items()
         for index, submenu in enumerate(submenu_items):
             print("%2i : %s" % (index + 1, submenu.title))
@@ -228,19 +231,27 @@ class Menu(object):
     '''A sinlge menu item with a callback'''
     def __init__(self, title, callback):
         self.callback = callback
-        self.title = title
+        self._title = title
 
     def __str__(self):
-        return '<Menu "%s">' % self.title
+        return '<Menu "%s">' % self._title
+
+    @property
+    def title(self):
+        if callable(self._title):
+            return self._title()
+
+        return str(self._title)
 
 
 class MenuGroup(object):
     '''A group of Menu items'''
     def __init__(
         self, title, menus=None, items_getter=None, items_getter_args=None,
-        items_getter_kwargs=None
+        items_getter_kwargs=None, subtitle=None
     ):
-        self.title = title
+        self._title = title
+        self._subtitle = subtitle
         self.menus = menus or []
         self.items_getter = items_getter
 
@@ -249,6 +260,20 @@ class MenuGroup(object):
 
     def __str__(self):
         return '<MenuGroup "%s">' % self.title
+
+    @property
+    def title(self):
+        if callable(self._title):
+            return self._title()
+        else:
+            return self._title
+
+    @property
+    def subtitle(self):
+        if callable(self._subtitle):
+            return self._subtitle()
+
+        return self._subtitle
 
     def get_items(self):
         '''
@@ -280,13 +305,17 @@ class MenuGroup(object):
                 kwargs.get('title') or first_line(decorated_function.__doc__),
                 items_getter=kwargs.get('items_getter'),
                 items_getter_args=kwargs.get('items_getter_args'),
-                items_getter_kwargs=kwargs.get('items_getter_kwargs'))
+                items_getter_kwargs=kwargs.get('items_getter_kwargs'),
+                subtitle=kwargs.get('subtitle'))
             self.menus.append(menu_)
             return menu_
         return decorator
 
 
-def group(title=None, items_getter=None, items_getter_args=None, items_getter_kwargs=None):
+def group(
+    title=None, items_getter=None, items_getter_args=None,
+    items_getter_kwargs=None, subtitle=None
+):
     '''A decorator to create a new MenuGroup'''
     def decorator(decorated_function):
         '''create a menu group decorator'''
@@ -294,7 +323,8 @@ def group(title=None, items_getter=None, items_getter_args=None, items_getter_kw
             title or first_line(decorated_function.__doc__),
             items_getter=items_getter,
             items_getter_args=items_getter_args,
-            items_getter_kwargs=items_getter_kwargs)
+            items_getter_kwargs=items_getter_kwargs,
+            subtitle=subtitle)
         MENU_ITEMS.append(group_)
         return group_
     return decorator

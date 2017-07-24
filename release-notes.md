@@ -1,3 +1,9 @@
+# v1.5.0
+*   Added `settings.quit_exit_code`
+*   Added MenuGroup subtitles
+*   Titles and subtitles can be both strings and `callable` objects
+***
+
 # v1.4.0
 *   Adding the ability to pre-select menu items during `run()`
 *   FIX: 'q' doesn't actually quit from a submenu
