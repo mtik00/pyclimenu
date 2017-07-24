@@ -47,6 +47,9 @@ class Settings(object):
     # menu.
     quit_value = 'q'
 
+    # Change this to modify the process exit code when the user quits.
+    quit_exit_code = 0
+
     # Set this to true if you are using colors but need to disable them
     # (e.g. a platform you use doesn't support it)
     disable_colors = False
@@ -150,7 +153,7 @@ def run(preselected_menu=None):
             menu_item = _show_group_menu(current_group)
 
         if menu_item == settings.quit_value:
-            sys.exit(0)
+            sys.exit(settings.quit_exit_code)
 
         if (not menu_item) and menu_stack:
             menu_stack.pop()

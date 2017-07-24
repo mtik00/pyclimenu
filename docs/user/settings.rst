@@ -41,6 +41,9 @@ The following parameters can be used to change how climenu operates
 
         Enter the selection ([0] to return, q to quit):
 
+**quit_exit_code** (``int``): This is the exit code of the python process that
+    is returned when the user *quits* the menu.
+
 Changing Displayed Text
 +++++++++++++++++++++++
 
