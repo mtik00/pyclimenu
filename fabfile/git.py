@@ -53,12 +53,17 @@ def tag():
     '''Create a tag'''
     current_version = get_version()
     tags = get_tags()
+    latest_tag = tags[-1] if tags else ''
 
-    print("...current version is: %s" % current_version)
-    if tags:
-        print("...latest tag is: %s" % tags[-1].string)
+    print("...current version is: v%s" % current_version)
+    if latest_tag:
+        print("...latest tag is: %s" % latest_tag.string)
 
-    name = user_input("Enter tag to create: ")
+    default_version = 'v%s' % current_version
+
+    name = user_input("Enter tag to create [default to: %s]: " % default_version)
+
+    name = name or default_version
     name = "v" + name if not name.startswith('v') else name
     message = "creating tag %s" % name
 
