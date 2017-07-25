@@ -23,6 +23,7 @@ __all__ = [
 ]
 (IS_WIN, IS_LIN) = ('win' in sys.platform, 'lin' in sys.platform)
 MENU_ITEMS = []
+TITLE_BREADCRUMBS = []
 PRESELECTED_MENU = None
 
 
@@ -54,6 +55,11 @@ class Settings(object):
     # (e.g. a platform you use doesn't support it)
     disable_colors = False
 
+    # Change the title of the menus to use *breadcrumbs*.
+    # For example, titles would be "Main Menu > Submenu 1 > Submenu 2"
+    breadcrumbs = False
+    breadcrumb_join = ' > '
+
     def get_submenu_prompt(self):
         return self.text['submenu_prompt'].format(
             back=", ".join([x or '""' for x in self.back_values]),
@@ -63,18 +69,27 @@ class Settings(object):
     def get_main_menu_prompt(self):
         return self.text['main_menu_prompt'].format(
             q=", ".join([x or '""' for x in self.back_values + [self.quit_value]]),
-            # q=self.quit_value
         )
 
 
 settings = Settings()  # pylint: disable=C0103
 
 
+def _show_title(menu_group=None):
+    if settings.breadcrumbs:
+        print(settings.breadcrumb_join.join(TITLE_BREADCRUMBS))
+    elif menu_group:
+        print(menu_group.title)
+    else:
+        print(settings.text['main_menu_title'])
+
+
 def _show_main_menu(menu_items, break_on_invalid=False):
     '''Show the main menu and return the selected item.'''
 
     while True:
-        print(settings.text['main_menu_title'])
+        _show_title()
+        # print(settings.text['main_menu_title'])
 
         for index, menu_group in enumerate(menu_items):
             print("%2i : %s" % (index + 1, menu_group.title))
@@ -101,7 +116,7 @@ def _show_main_menu(menu_items, break_on_invalid=False):
 def _show_group_menu(menu_group, break_on_invalid=False):
     '''Show a submenu and return the selected item.'''
     while True:
-        print(menu_group.title)
+        _show_title(menu_group)
 
         if menu_group.subtitle:
             print(menu_group.subtitle)
@@ -136,6 +151,7 @@ def run(preselected_menu=None):
     global PRESELECTED_MENU
     menu_stack = []
     current_group = None
+    TITLE_BREADCRUMBS.append(settings.text['main_menu_title'])
 
     if preselected_menu:
         PRESELECTED_MENU = (x for x in preselected_menu)
@@ -158,10 +174,19 @@ def run(preselected_menu=None):
         if menu_item == settings.quit_value:
             sys.exit(settings.quit_exit_code)
 
+        # We move back through previous menus by returning None from
+        # `_show_group_menu()`.
         if (not menu_item) and menu_stack:
+            # Pop the current menu and discard it
             menu_stack.pop()
+
+            # If there's still something in the stack, we want to show that
+            # menu.
             if menu_stack:
                 current_group = menu_stack.pop()
+
+            # Pop-off the old menu's title
+            TITLE_BREADCRUMBS.pop()
 
             continue  # pragma: no cover
 
@@ -170,6 +195,7 @@ def run(preselected_menu=None):
         # group and loop.
         if isinstance(menu_item, MenuGroup):
             menu_stack += [current_group, menu_item]
+            TITLE_BREADCRUMBS.append(menu_item.title)
             current_group = menu_item
             continue  # pragma: no cover
 

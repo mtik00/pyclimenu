@@ -1,3 +1,8 @@
+# v1.6.0
+*   Added `settings.breadcrumbs` and `settings.breadcrumb_join`
+*   Added Breadcrumbs to menu titles
+***
+
 # v1.5.0
 *   Added `settings.quit_exit_code`
 *   Added MenuGroup subtitles

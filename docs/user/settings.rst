@@ -44,6 +44,13 @@ The following parameters can be used to change how climenu operates
 **quit_exit_code** (``int``): This is the exit code of the python process that
     is returned when the user *quits* the menu.
 
+**breadcrumbs** (``bool``): This controls whether or not *breadcrumbs* for the
+    titles is enabled.  When this setting is ``True``, the title of the
+    displayed menu will be changed to ``Main Menu > Submenu 1 > Submenu 2``.
+
+**breadcrumb_join** (``string``): This is the string that is used to *join*
+    the menu titles.  This is only used when ``settings.breadcrumbs = True``.
+
 Changing Displayed Text
 +++++++++++++++++++++++
 
