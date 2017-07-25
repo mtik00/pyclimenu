@@ -22,5 +22,7 @@ To manage the project, you'll need to install the project's requirements file:
 *   Add/commit/push with `prep for vX.Y.Z release`
 *   Create a tag:  
     `fab git.tag`
+*   Wait for Travis CI to pass:  
+    https://travis-ci.org/mtik00/pyclimenu
 *   Do the release:  
     `fab release`
