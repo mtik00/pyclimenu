@@ -89,7 +89,6 @@ def _show_main_menu(menu_items, break_on_invalid=False):
 
     while True:
         _show_title()
-        # print(settings.text['main_menu_title'])
 
         for index, menu_group in enumerate(menu_items):
             print("%2i : %s" % (index + 1, menu_group.title))
@@ -175,7 +174,6 @@ def run(preselected_menu=None):
             sys.exit(settings.quit_exit_code)
 
         # We move back through previous menus by returning None from
-        # `_show_group_menu()`.
         if (not menu_item) and menu_stack:
             # Pop the current menu and discard it
             menu_stack.pop()
