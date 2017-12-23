@@ -6,11 +6,13 @@ import climenu
 
 
 def test_clear_screen():
-    (is_win, is_lin) = ('win' in sys.platform, 'lin' in sys.platform)
+    is_win = sys.platform.startswith('win')
+    is_nix = sys.platform.startswith('lin') or sys.platform.startswith('darwin')
+
     climenu.IS_WIN = False
-    climenu.IS_LIN = False
+    climenu.IS_NIX = False
 
     with pytest.raises(NotImplementedError):
         climenu.clear_screen()
 
-    (climenu.IS_WIN, climenu.IS_LIN) = (is_win, is_lin)
+    (climenu.IS_WIN, climenu.IS_NIX) = (is_win, is_nix)
