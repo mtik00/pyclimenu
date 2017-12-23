@@ -21,7 +21,8 @@ __version__ = '1.6.0'
 __all__ = [
     'menu', 'group', 'settings', 'colors',
 ]
-(IS_WIN, IS_LIN) = ('win' in sys.platform, 'lin' in sys.platform)
+IS_WIN = sys.platform.startswith('win')
+IS_NIX = sys.platform.startswith('lin') or sys.platform.startswith('darwin')
 MENU_ITEMS = []
 TITLE_BREADCRUMBS = []
 PRESELECTED_MENU = None
@@ -208,7 +209,7 @@ def clear_screen():
     '''Clears the terminal window'''
     if IS_WIN:
         os.system('cls')
-    elif IS_LIN:
+    elif IS_NIX:
         os.system('clear')
     else:
         raise NotImplementedError(
