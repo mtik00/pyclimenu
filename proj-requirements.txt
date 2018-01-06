@@ -7,3 +7,4 @@ wheel
 PyGithub
 coverage
 pytest
+markdown
