@@ -98,14 +98,14 @@ def test_clear_screen(monkeypatch):
     monkeypatch.setattr(os, 'system', lambda x: None)
 
     climenu.IS_WIN = True
-    climenu.IS_LIN = False
+    climenu.IS_NIX = False
     climenu.clear_screen()
 
     climenu.IS_WIN = False
-    climenu.IS_LIN = True
+    climenu.IS_NIX = True
     climenu.clear_screen()
 
-    (climenu.IS_WIN, climenu.IS_LIN) = (is_win, is_lin)
+    (climenu.IS_WIN, climenu.IS_NIX) = (is_win, is_lin)
 
 
 def test_run(monkeypatch):
