@@ -1,3 +1,7 @@
+# v1.7.0
+*   Add support for Mac OS thanks to @tonypiazza
+***
+
 # v1.6.0
 *   Added `settings.breadcrumbs` and `settings.breadcrumb_join`
 *   Added Breadcrumbs to menu titles
