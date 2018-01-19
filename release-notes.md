@@ -1,3 +1,7 @@
+# v1.8.0
+*   Add support for cygwin thanks to @delsauce
+***
+
 # v1.7.0
 *   Add support for Mac OS thanks to @tonypiazza
 ***
