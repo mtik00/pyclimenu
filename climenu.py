@@ -22,7 +22,7 @@ __all__ = [
     'menu', 'group', 'settings', 'colors',
 ]
 IS_WIN = sys.platform.startswith('win')
-IS_NIX = sys.platform.startswith('lin') or sys.platform.startswith('darwin')
+IS_NIX = sys.platform.startswith('lin') or sys.platform.startswith('darwin') or sys.platform.startswith('cygwin')
 MENU_ITEMS = []
 TITLE_BREADCRUMBS = []
 PRESELECTED_MENU = None
